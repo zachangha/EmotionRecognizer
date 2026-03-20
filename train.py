@@ -1,10 +1,10 @@
 import torch
 import numpy as np
 from dataloader import load_data
-from model import EmotionClassifier, save_model, load_model, model_path
+from model import save_model, load_model
 from compute_accuracy import compute_accuracy
 
-def train(num_epoch: int = 10,
+def train(num_epoch: int = 50,
           lr: float = 1e-3,
           batch_size: int = 16,
           seed: int = 2024,
@@ -30,7 +30,7 @@ def train(num_epoch: int = 10,
     loss_function = torch.nn.CrossEntropyLoss()
     
     train_dataset = load_data("train", "augmented", batch_size=batch_size)
-    test_dataset = load_data("test", "augmented", batch_size=batch_size)
+    test_dataset = load_data("test", "default", batch_size=batch_size)
 
     global_step = 0
     metrics = {"train_acc": [], "test_acc": []}
@@ -77,4 +77,4 @@ def train(num_epoch: int = 10,
         )
             
     save_model(model)   
-    print(f"Model saved to {model_path}")
+    print(f"Model saved")

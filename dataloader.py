@@ -24,10 +24,20 @@ class EmotionDataset(Dataset):
         xform = None
 
         if transform_pipeline == "default":
-            xform = transforms.ToTensor()
+            xform = transforms.Compose([
+                transforms.Grayscale(num_output_channels=1),
+                transforms.Resize((48, 48)),
+                transforms.ToTensor(),
+                transforms.Normalize(mean=[0.5], std=[0.5])
+            ])
         elif transform_pipeline == "augmented":
             xform = transforms.Compose([
                 transforms.Grayscale(num_output_channels=1),
+
+                transforms.RandomHorizontalFlip(p=0.5),
+                transforms.RandomRotation(10),
+                transforms.RandomAffine(degrees=0, translate=(0.1, 0.1), scale=(0.9, 1.1)),
+                
                 transforms.Resize((48, 48)),
                 transforms.ToTensor(),
                 transforms.Normalize(mean=[0.5], std=[0.5])

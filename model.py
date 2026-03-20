@@ -32,7 +32,7 @@ class EmotionClassifier(nn.Module):
 
             return x
 
-    def __init__(self, in_channels, num_classes, num_blocks = 2):
+    def __init__(self, in_channels, num_classes, num_blocks = 4):
         super().__init__()
 
         c1 = 64
